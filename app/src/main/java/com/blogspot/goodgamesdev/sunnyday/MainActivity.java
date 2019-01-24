@@ -76,49 +76,52 @@ public class MainActivity extends AppCompatActivity {
                 listView = findViewById(R.id.listViewId);
                 ArrayList<String> chosenData = new ArrayList<>();
 
-                //       TESTING JSONOBJECT AND HOW TO GET TO THIS DATA
+                //       I CHOOSE ONLY THE MOST INTERESTING DATA
                 // *********************************************************************
 
                 JSONObject jsonObject = new JSONObject(s);
                 Log.i("jsonObject:", jsonObject.toString());
 
-                String weatherInfoEverything = jsonObject.getString("weather");
-                Log.i("Weather content: ", weatherInfoEverything);
+                // add country to chosenData
+                JSONObject countryObj = jsonObject.getJSONObject("sys");
+                String country = "Country: " + countryObj.getString("country");
+                chosenData.add(country);
+                Log.i("sys", countryObj.toString());
 
-                JSONArray arr = new JSONArray(weatherInfoEverything);
+                // add accurate location
+                String location = "Your location: " + jsonObject.getString("name");
+                chosenData.add(location);
 
+                // add coordinates
                 JSONObject coord  = jsonObject.getJSONObject("coord");
                 Log.i("coord", coord.toString());
-                String lon = coord.getString("lon");
-                String lat = coord.getString("lat");
+                String lon = "Longitude: " + coord.getString("lon");
+                String lat = "Latitude: " + coord.getString("lat");
+                chosenData.add(lon);
+                chosenData.add(lat);
 
-//                JSONObject countryObj = jsonObject.getJSONObject("sys");
-//                String country = countryObj.getString("country");
-//                Log.i("country", country);
+                // add weather info
+                String weatherInfo = jsonObject.getString("weather");
+                JSONArray arr = new JSONArray(weatherInfo);
+                JSONObject weatherOb = arr.getJSONObject(0);
+                String weather = "Weather: " + weatherOb.getString("main");
+                chosenData.add(weather);
 
-                Log.i("lon", lon);
-                Log.i("lat", lat);
+                // add temperature
+                JSONObject tempInfo = jsonObject.getJSONObject("main");
+                String temp = "Temperature: " + tempInfo.getString("temp") + " Celsius";
+                chosenData.add(temp);
 
+                // add wind speed
+                JSONObject windInfo = jsonObject.getJSONObject("wind");
+                String wind = "Wind: " + windInfo.getString("speed") + " meter/sec";
+                chosenData.add(wind);
 
-                // here I choose the most interesting data to show
-                for (int i = 0; i < arr.length(); i++) {
-                    JSONObject jsonPart = arr.getJSONObject(i);
-                    Log.i("main", jsonPart.getString("main"));
-                    Log.i("description", jsonPart.getString("description"));
-                    chosenData.add(jsonPart.getString("main"));
-                    chosenData.add(jsonPart.getString("description"));
+                // add clouds info
+                JSONObject cloudInfo = jsonObject.getJSONObject("clouds");
+                String clouds = "Clouds: " + cloudInfo.getString("all") + " percent";
+                chosenData.add(clouds);
 
-
-                }
-
-                String mainData = jsonObject.getString("main");
-
-
-
-
-
-
-                // chosenData.add(retrieveCountry);
 
                 // *********************************************************************
 
@@ -167,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
                             Log.d("Test Message:", "The longitude is " + String.valueOf(longitude));
 
                             // build string with latitude and longitude and save it to webAddress variable
-                            webAddress = "http://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + API_KEY;
+                            webAddress = "http://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + API_KEY + "&units=metric";
                             Log.d("webAddress: ", webAddress);
 
                             // instantiate inner class and run it's method
