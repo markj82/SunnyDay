@@ -81,9 +81,24 @@ public class MainActivity extends AppCompatActivity {
 
                 JSONObject jsonObject = new JSONObject(s);
                 Log.i("jsonObject:", jsonObject.toString());
+
                 String weatherInfoEverything = jsonObject.getString("weather");
                 Log.i("Weather content: ", weatherInfoEverything);
+
                 JSONArray arr = new JSONArray(weatherInfoEverything);
+
+                JSONObject coord  = jsonObject.getJSONObject("coord");
+                Log.i("coord", coord.toString());
+                String lon = coord.getString("lon");
+                String lat = coord.getString("lat");
+
+//                JSONObject countryObj = jsonObject.getJSONObject("sys");
+//                String country = countryObj.getString("country");
+//                Log.i("country", country);
+
+                Log.i("lon", lon);
+                Log.i("lat", lat);
+
 
                 // here I choose the most interesting data to show
                 for (int i = 0; i < arr.length(); i++) {
@@ -92,9 +107,15 @@ public class MainActivity extends AppCompatActivity {
                     Log.i("description", jsonPart.getString("description"));
                     chosenData.add(jsonPart.getString("main"));
                     chosenData.add(jsonPart.getString("description"));
+
+
                 }
 
                 String mainData = jsonObject.getString("main");
+
+
+
+
 
 
                 // chosenData.add(retrieveCountry);
