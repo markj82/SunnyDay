@@ -2,22 +2,12 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayoutId"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/clouds"
     tools:context="com.blogspot.goodgamesdev.sunnyday.MainActivity"
     tools:layout_editor_absoluteY="81dp">
-
-    <Button
-        android:id="@+id/getLocationButtonId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="16dp"
-        android:text="Check Weather"
-        app:layout_constraintBottom_toTopOf="@+id/listViewId"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
         android:id="@+id/listViewId"
@@ -26,9 +16,24 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/getLocationButtonId" />
+        app:layout_constraintTop_toBottomOf="@+id/imageButtonId" />
+
+    <ImageButton
+        android:id="@+id/imageButtonId"
+        android:layout_width="160dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        android:background="#00000000"
+        android:scaleType="fitXY"
+        android:visibility="visible"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/check" />
 
 </android.support.constraint.ConstraintLayout>

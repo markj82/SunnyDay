@@ -4,12 +4,13 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -30,6 +31,7 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 public class MainActivity extends AppCompatActivity {
 
     ListView listView;
+    ConstraintLayout constraintLayout;
 
     // inner class for web connection, to download json from openweathermap website
     public class DownloadTask extends AsyncTask<String, Void, String> {
@@ -76,8 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 listView = findViewById(R.id.listViewId);
                 ArrayList<String> chosenData = new ArrayList<>();
 
-                //       I CHOOSE ONLY THE MOST INTERESTING DATA
-                // *********************************************************************
+                // HERE I CHOOSE ONLY THE MOST INTERESTING DATA
 
                 JSONObject jsonObject = new JSONObject(s);
                 Log.i("jsonObject:", jsonObject.toString());
@@ -122,9 +123,6 @@ public class MainActivity extends AppCompatActivity {
                 String clouds = "Clouds: " + cloudInfo.getString("all") + " percent";
                 chosenData.add(clouds);
 
-
-                // *********************************************************************
-
                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String> (MainActivity.this, android.R.layout.simple_list_item_1, chosenData);
                 listView.setAdapter(arrayAdapter);
 
@@ -136,9 +134,11 @@ public class MainActivity extends AppCompatActivity {
 
     // API key from openweathermap
     // api.openweathermap.org/data/2.5/weather?lat=57&lon=21&appid=e146665a4b33f325f8356036d11f0baf
+    // add &units=metric on the end of the link to get metric data (celsius temp)
     private static final String API_KEY = "e146665a4b33f325f8356036d11f0baf";
 
-    Button button;
+    //Button button;
+    ImageButton buttonImg;
     String webAddress;
 
     private FusedLocationProviderClient client;
@@ -148,13 +148,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        constraintLayout = findViewById(R.id.constraintLayoutId);
+//        constraintLayout.setBackground(getResources().getDrawable(R.drawable.clouds));
+
         requestPermission();
 
         client = LocationServices.getFusedLocationProviderClient(this);
 
-        button = findViewById(R.id.getLocationButtonId);
+        //button = findViewById(R.id.getLocationButtonId);
+        buttonImg = findViewById(R.id.imageButtonId);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        buttonImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (ActivityCompat.checkSelfPermission(MainActivity.this, ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
